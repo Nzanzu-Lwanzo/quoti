@@ -1,0 +1,48 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "./dist"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Author {
+  id    String @id @default(uuid())
+  name  String
+  bio   String
+  books Book[] @relation("BooksAuthors") // One author can have many books, and vice versa
+}
+
+model Book {
+  id              String   @id @default(uuid())
+  title           String
+  sum             String?
+  publishYear     Int?
+  publishingHouse String?
+  publishingTown  String?
+  edition         String?
+  authors         Author[] @relation("BooksAuthors") // One book can have many authors, and vice versa
+  quotes          Quote[] // One book has many quotes
+}
+
+model Quote {
+  id         String     @id @default(uuid())
+  text       String
+  reference  Book       @relation(fields: [bookId], references: [id], onDelete: Cascade) // One quote belongs to one book
+  bookId     String
+  categories Category[] @relation("QuotesCategories") // One quote may belong to many categories
+
+  /// author ->
+  /// No need to specifiy the author of the quote on this model
+  /// If we need the author, we'll be proceeding by joins to get
+  /// the authors of the book the quote belongs to.
+}
+
+model Category {
+  id          Int     @id @default(autoincrement())
+  tag         String
+  description String?
+  quotes      Quote[] @relation("QuotesCategories") // One category may hold to many quotes
+}
