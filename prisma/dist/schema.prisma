@@ -9,10 +9,10 @@ datasource db {
 }
 
 model Author {
-  id    String @id @default(uuid())
+  id    String  @id @default(uuid())
   name  String
-  bio   String
-  books Book[] @relation("BooksAuthors") // One author can have many books, and vice versa
+  bio   String?
+  books Book[]  @relation("BooksAuthors") // One author can have many books, and vice versa
 }
 
 model Book {
