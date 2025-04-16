@@ -5723,13 +5723,13 @@ export namespace Prisma {
 
   export type AuthorWhereUniqueInput = Prisma.AtLeast<{
     id?: string
+    name?: string
     AND?: AuthorWhereInput | AuthorWhereInput[]
     OR?: AuthorWhereInput[]
     NOT?: AuthorWhereInput | AuthorWhereInput[]
-    name?: StringFilter<"Author"> | string
     bio?: StringNullableFilter<"Author"> | string | null
     books?: BookListRelationFilter
-  }, "id">
+  }, "id" | "name">
 
   export type AuthorOrderByWithAggregationInput = {
     id?: SortOrder
@@ -5886,13 +5886,13 @@ export namespace Prisma {
 
   export type CategoryWhereUniqueInput = Prisma.AtLeast<{
     id?: number
+    tag?: string
     AND?: CategoryWhereInput | CategoryWhereInput[]
     OR?: CategoryWhereInput[]
     NOT?: CategoryWhereInput | CategoryWhereInput[]
-    tag?: StringFilter<"Category"> | string
     description?: StringNullableFilter<"Category"> | string | null
     quotes?: QuoteListRelationFilter
-  }, "id">
+  }, "id" | "tag">
 
   export type CategoryOrderByWithAggregationInput = {
     id?: SortOrder
