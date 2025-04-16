@@ -1398,7 +1398,7 @@ export namespace Prisma {
   export type AuthorGroupByOutputType = {
     id: string
     name: string
-    bio: string
+    bio: string | null
     _count: AuthorCountAggregateOutputType | null
     _min: AuthorMinAggregateOutputType | null
     _max: AuthorMaxAggregateOutputType | null
@@ -1460,7 +1460,7 @@ export namespace Prisma {
     scalars: $Extensions.GetPayloadResult<{
       id: string
       name: string
-      bio: string
+      bio: string | null
     }, ExtArgs["result"]["author"]>
     composites: {}
   }
@@ -5710,14 +5710,14 @@ export namespace Prisma {
     NOT?: AuthorWhereInput | AuthorWhereInput[]
     id?: StringFilter<"Author"> | string
     name?: StringFilter<"Author"> | string
-    bio?: StringFilter<"Author"> | string
+    bio?: StringNullableFilter<"Author"> | string | null
     books?: BookListRelationFilter
   }
 
   export type AuthorOrderByWithRelationInput = {
     id?: SortOrder
     name?: SortOrder
-    bio?: SortOrder
+    bio?: SortOrderInput | SortOrder
     books?: BookOrderByRelationAggregateInput
   }
 
@@ -5727,14 +5727,14 @@ export namespace Prisma {
     OR?: AuthorWhereInput[]
     NOT?: AuthorWhereInput | AuthorWhereInput[]
     name?: StringFilter<"Author"> | string
-    bio?: StringFilter<"Author"> | string
+    bio?: StringNullableFilter<"Author"> | string | null
     books?: BookListRelationFilter
   }, "id">
 
   export type AuthorOrderByWithAggregationInput = {
     id?: SortOrder
     name?: SortOrder
-    bio?: SortOrder
+    bio?: SortOrderInput | SortOrder
     _count?: AuthorCountOrderByAggregateInput
     _max?: AuthorMaxOrderByAggregateInput
     _min?: AuthorMinOrderByAggregateInput
@@ -5746,7 +5746,7 @@ export namespace Prisma {
     NOT?: AuthorScalarWhereWithAggregatesInput | AuthorScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"Author"> | string
     name?: StringWithAggregatesFilter<"Author"> | string
-    bio?: StringWithAggregatesFilter<"Author"> | string
+    bio?: StringNullableWithAggregatesFilter<"Author"> | string | null
   }
 
   export type BookWhereInput = {
@@ -5917,47 +5917,47 @@ export namespace Prisma {
   export type AuthorCreateInput = {
     id?: string
     name: string
-    bio: string
+    bio?: string | null
     books?: BookCreateNestedManyWithoutAuthorsInput
   }
 
   export type AuthorUncheckedCreateInput = {
     id?: string
     name: string
-    bio: string
+    bio?: string | null
     books?: BookUncheckedCreateNestedManyWithoutAuthorsInput
   }
 
   export type AuthorUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    bio?: StringFieldUpdateOperationsInput | string
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
     books?: BookUpdateManyWithoutAuthorsNestedInput
   }
 
   export type AuthorUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    bio?: StringFieldUpdateOperationsInput | string
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
     books?: BookUncheckedUpdateManyWithoutAuthorsNestedInput
   }
 
   export type AuthorCreateManyInput = {
     id?: string
     name: string
-    bio: string
+    bio?: string | null
   }
 
   export type AuthorUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    bio?: StringFieldUpdateOperationsInput | string
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type AuthorUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    bio?: StringFieldUpdateOperationsInput | string
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type BookCreateInput = {
@@ -6140,10 +6140,29 @@ export namespace Prisma {
     not?: NestedStringFilter<$PrismaModel> | string
   }
 
+  export type StringNullableFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | null
+    notIn?: string[] | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringNullableFilter<$PrismaModel> | string | null
+  }
+
   export type BookListRelationFilter = {
     every?: BookWhereInput
     some?: BookWhereInput
     none?: BookWhereInput
+  }
+
+  export type SortOrderInput = {
+    sort: SortOrder
+    nulls?: NullsOrder
   }
 
   export type BookOrderByRelationAggregateInput = {
@@ -6185,7 +6204,7 @@ export namespace Prisma {
     _max?: NestedStringFilter<$PrismaModel>
   }
 
-  export type StringNullableFilter<$PrismaModel = never> = {
+  export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel> | null
     in?: string[] | null
     notIn?: string[] | null
@@ -6196,7 +6215,10 @@ export namespace Prisma {
     contains?: string | StringFieldRefInput<$PrismaModel>
     startsWith?: string | StringFieldRefInput<$PrismaModel>
     endsWith?: string | StringFieldRefInput<$PrismaModel>
-    not?: NestedStringNullableFilter<$PrismaModel> | string | null
+    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedStringNullableFilter<$PrismaModel>
+    _max?: NestedStringNullableFilter<$PrismaModel>
   }
 
   export type IntNullableFilter<$PrismaModel = never> = {
@@ -6220,11 +6242,6 @@ export namespace Prisma {
     every?: QuoteWhereInput
     some?: QuoteWhereInput
     none?: QuoteWhereInput
-  }
-
-  export type SortOrderInput = {
-    sort: SortOrder
-    nulls?: NullsOrder
   }
 
   export type AuthorOrderByRelationAggregateInput = {
@@ -6271,23 +6288,6 @@ export namespace Prisma {
 
   export type BookSumOrderByAggregateInput = {
     publishYear?: SortOrder
-  }
-
-  export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel> | null
-    in?: string[] | null
-    notIn?: string[] | null
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    contains?: string | StringFieldRefInput<$PrismaModel>
-    startsWith?: string | StringFieldRefInput<$PrismaModel>
-    endsWith?: string | StringFieldRefInput<$PrismaModel>
-    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedStringNullableFilter<$PrismaModel>
-    _max?: NestedStringNullableFilter<$PrismaModel>
   }
 
   export type IntNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -6408,6 +6408,10 @@ export namespace Prisma {
     set?: string
   }
 
+  export type NullableStringFieldUpdateOperationsInput = {
+    set?: string | null
+  }
+
   export type BookUpdateManyWithoutAuthorsNestedInput = {
     create?: XOR<BookCreateWithoutAuthorsInput, BookUncheckedCreateWithoutAuthorsInput> | BookCreateWithoutAuthorsInput[] | BookUncheckedCreateWithoutAuthorsInput[]
     connectOrCreate?: BookCreateOrConnectWithoutAuthorsInput | BookCreateOrConnectWithoutAuthorsInput[]
@@ -6458,10 +6462,6 @@ export namespace Prisma {
     connectOrCreate?: QuoteCreateOrConnectWithoutReferenceInput | QuoteCreateOrConnectWithoutReferenceInput[]
     createMany?: QuoteCreateManyReferenceInputEnvelope
     connect?: QuoteWhereUniqueInput | QuoteWhereUniqueInput[]
-  }
-
-  export type NullableStringFieldUpdateOperationsInput = {
-    set?: string | null
   }
 
   export type NullableIntFieldUpdateOperationsInput = {
@@ -6638,6 +6638,20 @@ export namespace Prisma {
     not?: NestedStringFilter<$PrismaModel> | string
   }
 
+  export type NestedStringNullableFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | null
+    notIn?: string[] | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringNullableFilter<$PrismaModel> | string | null
+  }
+
   export type NestedStringWithAggregatesFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[]
@@ -6666,31 +6680,6 @@ export namespace Prisma {
     not?: NestedIntFilter<$PrismaModel> | number
   }
 
-  export type NestedStringNullableFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel> | null
-    in?: string[] | null
-    notIn?: string[] | null
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    contains?: string | StringFieldRefInput<$PrismaModel>
-    startsWith?: string | StringFieldRefInput<$PrismaModel>
-    endsWith?: string | StringFieldRefInput<$PrismaModel>
-    not?: NestedStringNullableFilter<$PrismaModel> | string | null
-  }
-
-  export type NestedIntNullableFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel> | null
-    in?: number[] | null
-    notIn?: number[] | null
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntNullableFilter<$PrismaModel> | number | null
-  }
-
   export type NestedStringNullableWithAggregatesFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel> | null
     in?: string[] | null
@@ -6706,6 +6695,17 @@ export namespace Prisma {
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedStringNullableFilter<$PrismaModel>
     _max?: NestedStringNullableFilter<$PrismaModel>
+  }
+
+  export type NestedIntNullableFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | null
+    notIn?: number[] | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableFilter<$PrismaModel> | number | null
   }
 
   export type NestedIntNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -6821,13 +6821,13 @@ export namespace Prisma {
   export type AuthorCreateWithoutBooksInput = {
     id?: string
     name: string
-    bio: string
+    bio?: string | null
   }
 
   export type AuthorUncheckedCreateWithoutBooksInput = {
     id?: string
     name: string
-    bio: string
+    bio?: string | null
   }
 
   export type AuthorCreateOrConnectWithoutBooksInput = {
@@ -6878,7 +6878,7 @@ export namespace Prisma {
     NOT?: AuthorScalarWhereInput | AuthorScalarWhereInput[]
     id?: StringFilter<"Author"> | string
     name?: StringFilter<"Author"> | string
-    bio?: StringFilter<"Author"> | string
+    bio?: StringNullableFilter<"Author"> | string | null
   }
 
   export type QuoteUpsertWithWhereUniqueWithoutReferenceInput = {
@@ -7080,19 +7080,19 @@ export namespace Prisma {
   export type AuthorUpdateWithoutBooksInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    bio?: StringFieldUpdateOperationsInput | string
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type AuthorUncheckedUpdateWithoutBooksInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    bio?: StringFieldUpdateOperationsInput | string
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type AuthorUncheckedUpdateManyWithoutBooksInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    bio?: StringFieldUpdateOperationsInput | string
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type QuoteUpdateWithoutReferenceInput = {
