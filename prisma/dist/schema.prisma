@@ -10,7 +10,7 @@ datasource db {
 
 model Author {
   id    String  @id @default(uuid())
-  name  String
+  name  String  @unique
   bio   String?
   books Book[]  @relation("BooksAuthors") // One author can have many books, and vice versa
 }
@@ -42,7 +42,7 @@ model Quote {
 
 model Category {
   id          Int     @id @default(autoincrement())
-  tag         String
+  tag         String  @unique
   description String?
   quotes      Quote[] @relation("QuotesCategories") // One category may hold to many quotes
 }
