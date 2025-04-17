@@ -61,4 +61,36 @@ export class CategoryService {
       }
     })
   }
+
+  async addQuoteToCategory(quoteId: string, categoryId: number) {
+    const updatedCategory = await this.db.category.update({
+      where: {
+        id: categoryId
+      },
+      data: {
+        quotes: {
+          connect: [{ id: quoteId }]
+        }
+      },
+      include: { quotes: true }
+    })
+    return updatedCategory
+  }
+
+  async removeQuoteFromCategory(quoteId: string, categoryId: number) {
+    const updatedCategory = await this.db.category.update({
+      where: {
+        id: categoryId
+      },
+      data: {
+        quotes: {
+          disconnect: [{ id: quoteId }]
+        }
+      },
+      include: { quotes: true }
+    })
+    return updatedCategory
+  }
+
+
 }

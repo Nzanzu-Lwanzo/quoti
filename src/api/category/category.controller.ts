@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, HttpCode, ValidationPipe, ParseIntPipe, NotFoundException } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, HttpCode, ValidationPipe, ParseIntPipe, NotFoundException, Query } from '@nestjs/common';
 import { CategoryService } from './category.service';
 import { CreateCategoryDto } from "./category.dto";
 import { UpdateCategoryDto } from './category.dto';
@@ -34,6 +34,26 @@ export class CategoryController {
     }
 
     return formatResponseData(category)
+  }
+
+  // ADD QUOTE TO CATEGORY
+  @Patch('/add')
+  async addQuoteToCategory(
+    @Query('quote') quoteId: string,
+    @Query('categ', ParseIntPipe) categoryId: number
+  ) {
+    const updatedCategory = await this.categoryService.addQuoteToCategory(quoteId, categoryId)
+    return formatResponseData(updatedCategory)
+  }
+
+  // REMOVE QUOTE FROM CATEGORY
+  @Patch('/remove')
+  async removeQuoteToCategory(
+    @Query('quote') quoteId: string,
+    @Query('categ', ParseIntPipe) categoryId: number
+  ) {
+    const updatedCategory = await this.categoryService.removeQuoteFromCategory(quoteId, categoryId)
+    return formatResponseData(updatedCategory)
   }
 
   // UPDATE
