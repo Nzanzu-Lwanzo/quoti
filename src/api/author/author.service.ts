@@ -35,7 +35,16 @@ export class AuthorService {
             options['take'] = limit
         }
 
-        const authors = await this.db.author.findMany(options);
+        const authors = await this.db.author.findMany({
+            ...options,
+            include: {
+                _count: {
+                    select: {
+                        books: true
+                    }
+                }
+            }
+        });
         return authors
     }
 

@@ -2,7 +2,7 @@ import { Controller, Get, Post, Body, Query, ParseEnumPipe, InternalServerErrorE
 import { AuthorService } from './author.service';
 import { CreateAuthorDto, UpdateAuthorDto } from "./author.dto";
 import { formatResponseData } from 'src/lib/formatters';
-import { PrismaClientKnownRequestError } from 'prisma/dist/runtime/library';
+import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
 
 @Controller('api/author')
 export class AuthorController {
