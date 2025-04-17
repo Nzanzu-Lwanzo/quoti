@@ -9,6 +9,7 @@ import { FilterComparisonOptions } from './lib/@types';
 export class BookController {
   constructor(private readonly bookService: BookService) { }
 
+  // CREATE
   @Post()
   async create(
     @Body(new ValidationPipe({ whitelist: true })) createBookDto: CreateBookDto
@@ -17,6 +18,7 @@ export class BookController {
     return formatResponseData(createdBook)
   }
 
+  // GET ALL
   @Get()
   async findAll(
     @Query('pyc', new ParseEnumPipe(["gt", "lt", "eq"], { optional: true })) pyc?: FilterComparisonOptions,
@@ -37,6 +39,7 @@ export class BookController {
     return formatResponseData(books)
   }
 
+  // GET QUOTES ASSOCIATED TO BOOK
   @Get('/quotes/:id')
   async getAllQuotes(
     @Param('id') id: string
@@ -45,6 +48,7 @@ export class BookController {
     return formatResponseData(quotes)
   }
 
+  // GET BOOK
   @Get(':id')
   async findOne(@Param('id') id: string) {
     const book = await this.bookService.findOne(id);
@@ -56,6 +60,7 @@ export class BookController {
     return formatResponseData(book)
   }
 
+  // ADD AUTHOR TO BOOK'S AUTHORS ARRAY
   @Patch('/add')
   async addAuthorToBook(
     @Query('book') bookId: string,
@@ -65,6 +70,7 @@ export class BookController {
     return formatResponseData(updatedBook)
   }
 
+  // REMOVE AUTHOR FROM BOOK'S AUTHORS ARRAY
   @Patch('/remove')
   async removeAuthorFromBook(
     @Query('book') bookId: string,
@@ -74,12 +80,14 @@ export class BookController {
     return formatResponseData(updatedBook)
   }
 
+  // UPDATE ONE BOOK
   @Patch(':id')
   async update(@Param('id') id: string, @Body() updateBookDto: Omit<UpdateBookDto, "authors">) {
     const updatedBook = await this.bookService.update(id, updateBookDto);
     return formatResponseData(updatedBook)
   }
 
+  // DELETE ONE BOOK
   @Delete(':id')
   @HttpCode(204)
   async remove(@Param('id') id: string) {

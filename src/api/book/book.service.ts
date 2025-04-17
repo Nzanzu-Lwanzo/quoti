@@ -14,6 +14,14 @@ export class BookService {
 
   // GLOBAL VARS
   defaultTakeBooks: number = 50;
+  joinSchema = {
+    authors: true,
+    _count: {
+      select: {
+        quotes: true
+      }
+    }
+  }
 
 
   async create(createBookDto: CreateBookDto) {
@@ -22,14 +30,6 @@ export class BookService {
         ...createBookDto,
         authors: {
           connect: createBookDto.authors.map((id) => ({ id }))
-        }
-      },
-      include: {
-        authors: true, // Get the data of the authors who wrote this this book
-        _count: {
-          select: {
-            quotes: true // Get the number of quotes associated with this book
-          }
         }
       }
     })
@@ -46,14 +46,7 @@ export class BookService {
         publishingTown: filterOptions?.publishingTown ? { contains: filterOptions?.publishingTown } : undefined,
         edition: filterOptions?.edition ? { contains: filterOptions?.edition } : undefined,
       },
-      include: {
-        authors: true,
-        _count: {
-          select: {
-            quotes: true
-          }
-        }
-      }
+      include: this.joinSchema
     })
 
     return books
@@ -81,7 +74,8 @@ export class BookService {
     const book = await this.db.book.findUnique({
       where: {
         id
-      }
+      },
+      include: this.joinSchema
     })
     return book
   }
@@ -91,7 +85,8 @@ export class BookService {
       where: {
         id
       },
-      data: updateBookDto
+      data: updateBookDto,
+      include: this.joinSchema
     })
 
     return updatedBook
@@ -101,7 +96,8 @@ export class BookService {
     await this.db.book.delete({
       where: {
         id
-      }
+      },
+      include: this.joinSchema
     })
   }
 
@@ -116,14 +112,7 @@ export class BookService {
           connect: [{ id: authorId }]
         }
       },
-      include: {
-        authors: true,
-        _count: {
-          select: {
-            quotes: true
-          }
-        }
-      }
+      include: this.joinSchema
     })
 
     return updatedBook
@@ -141,14 +130,7 @@ export class BookService {
           disconnect: [{ id: authorId }]
         }
       },
-      include: {
-        authors: true,
-        _count: {
-          select: {
-            quotes: true
-          }
-        }
-      }
+      include: this.joinSchema
     })
 
     return updatedBook

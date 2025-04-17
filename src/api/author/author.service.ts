@@ -9,6 +9,15 @@ export class AuthorService {
         private db: DatabaseService
     ) { }
 
+    // GLOBAL VARS
+    joinSchema = {
+        _count: {
+            select: {
+                books: true
+            }
+        }
+    }
+
     async createAuthor(createAuthorDto: CreateAuthorDto) {
         const createdAuthor = await this.db.author.create({
             data: createAuthorDto
@@ -37,13 +46,7 @@ export class AuthorService {
 
         const authors = await this.db.author.findMany({
             ...options,
-            include: {
-                _count: {
-                    select: {
-                        books: true
-                    }
-                }
-            }
+            include: this.joinSchema
         });
         return authors
     }
@@ -53,7 +56,8 @@ export class AuthorService {
         const foundAuthor = await this.db.author.findUnique({
             where: {
                 id
-            }
+            },
+            include: this.joinSchema
         })
 
         return foundAuthor
@@ -65,7 +69,8 @@ export class AuthorService {
             where: {
                 id
             },
-            data: updateAuthorDto
+            data: updateAuthorDto,
+            include: this.joinSchema
         })
 
         return updatedAuthor
