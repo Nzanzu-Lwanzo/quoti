@@ -10,9 +10,9 @@ datasource db {
 
 model User {
   id                  String               @id @default(uuid())
-  name                String
+  name                String?
   bio                 String?
-  email               String?
+  email               String               @unique
   password            String
   quotes              Quote[] // One user uploads many quotes
   upvotedQuotes       Quote[]              @relation("UsersQuotes") // Many users upvote many quotes
