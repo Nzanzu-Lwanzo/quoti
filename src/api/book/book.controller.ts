@@ -82,7 +82,7 @@ export class BookController {
 
   // UPDATE ONE BOOK
   @Patch(':id')
-  async update(@Param('id') id: string, @Body() updateBookDto: Omit<UpdateBookDto, "authors">) {
+  async update(@Param('id') id: string, @Body(ValidationPipe) updateBookDto: Omit<UpdateBookDto, "authors">) {
     const updatedBook = await this.bookService.update(id, updateBookDto);
     return formatResponseData(updatedBook)
   }

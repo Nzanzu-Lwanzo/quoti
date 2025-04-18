@@ -1,4 +1,4 @@
-import { PartialType } from '@nestjs/mapped-types';
+import { OmitType, PartialType } from '@nestjs/mapped-types';
 import { IsString, IsOptional, IsNumber, Length, MaxLength, IsPositive, IsNotEmpty, IsNumberString, IsArray, IsEmpty } from 'class-validator';
 
 export class CreateBookDto {
@@ -34,5 +34,5 @@ export class CreateBookDto {
     @IsNotEmpty({ message: "<authors> can't be empty or null" })
     authors: string[]
 }
-export class UpdateBookDto extends PartialType(CreateBookDto) { }
+export class UpdateBookDto extends PartialType(OmitType(CreateBookDto, ['authors'])) { }
 

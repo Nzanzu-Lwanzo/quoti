@@ -58,7 +58,7 @@ export class CategoryController {
 
   // UPDATE
   @Patch(':id')
-  async update(@Param('id') id: string, @Body() updateCategoryDto: UpdateCategoryDto) {
+  async update(@Param('id') id: string, @Body(ValidationPipe) updateCategoryDto: UpdateCategoryDto) {
     const updatedCategory = await this.categoryService.update(+id, updateCategoryDto);
     return formatResponseData(updatedCategory)
   }
