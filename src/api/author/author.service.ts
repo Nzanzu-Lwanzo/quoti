@@ -15,7 +15,7 @@ export class AuthorService {
             select: {
                 books: true
             }
-        }
+        },
     }
 
     async createAuthor(createAuthorDto: CreateAuthorDto) {

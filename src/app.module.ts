@@ -6,9 +6,10 @@ import { AuthorModule } from './api/author/author.module';
 import { BookModule } from './api/book/book.module';
 import { CategoryModule } from './api/category/category.module';
 import { QuoteModule } from './api/quote/quote.module';
+import { UserModule } from './api/user/user.module';
 
 @Module({
-  imports: [DatabaseModule, AuthorModule, BookModule, CategoryModule, QuoteModule],
+  imports: [DatabaseModule, AuthorModule, BookModule, CategoryModule, QuoteModule, UserModule],
   controllers: [AppController],
   providers: [AppService],
 })
