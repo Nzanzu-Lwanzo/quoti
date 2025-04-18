@@ -25,11 +25,24 @@ export class QuoteService {
         authors: {
           select: {
             id: true, // Get the ids of the authors of the categories associated
-            name: true // Get the names of the authors of the categories associated
+            name: true, // Get the names of the authors of the categories associated
+            image: true // Get the image if the author
           }
         }
       }
     },
+    uploader: {
+      select: {
+        id: true,
+        name: true
+      }
+    },
+    upvotes: {
+      select: {
+        id: true,
+        name: true
+      }
+    }
   }
 
   async create(createQuoteDto: CreateQuoteDto) {
@@ -42,6 +55,9 @@ export class QuoteService {
         categories: {
           connect: createQuoteDto.categories.map((id) => ({ id }))
         },
+        uploader: {
+          connect: { id: createQuoteDto.uploader }
+        }
       },
       include: this.joinSchema
     })
@@ -75,6 +91,9 @@ export class QuoteService {
         ...updateQuoteDto,
         reference: {
           connect: updateQuoteDto.reference ? { id: updateQuoteDto.reference } : undefined
+        },
+        uploader: {
+          connect: undefined // The uploader of a quote can't be changed
         }
       },
       include: this.joinSchema

@@ -15,6 +15,10 @@ export class CreateQuoteDto {
     @ArrayNotEmpty({ message: "<categories> can't be empty" })
     @IsNumber({ allowInfinity: false, allowNaN: false, maxDecimalPlaces: 0 }, { each: true, message: "All the elements of <categories> must be <id :number>" })
     categories: number[]
+
+    @IsString({ message: "Must provide a valid <uploader> : <type : string>" })
+    @IsUUID(4, { message: "Must provide a valid <uploader> : <type : uuid>" })
+    uploader: string
 }
-export class UpdateQuoteDto extends PartialType(OmitType(CreateQuoteDto, ['categories'])) { }
+export class UpdateQuoteDto extends PartialType(OmitType(CreateQuoteDto, ['categories', 'uploader'])) { }
 

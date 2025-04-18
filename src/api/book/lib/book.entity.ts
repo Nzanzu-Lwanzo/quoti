@@ -1,9 +1,10 @@
-import { Author } from "@prisma/client";
+import { Author } from "src/api/author/author.entity";
 
 export class Book {
     id: string;
     title: string;
     sum?: string;
+    image?: string;
     publishYear?: number;
     publishingHouse?: string;
     publishingTown?: string;
