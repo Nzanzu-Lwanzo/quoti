@@ -8,10 +8,21 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model User {
+  id            String  @id @default(uuid())
+  name          String
+  bio           String?
+  email         String
+  password      String
+  quotes        Quote[] // One user uploads many quotes
+  upvotedQuotes Quote[] @relation("UsersQuotes") // Many users upvote many quotes
+}
+
 model Author {
   id    String  @id @default(uuid())
   name  String  @unique
   bio   String?
+  image String?
   books Book[]  @relation("BooksAuthors") // One author can have many books, and vice versa
 }
 
@@ -19,6 +30,7 @@ model Book {
   id              String   @id @default(uuid())
   title           String
   sum             String?
+  image           String?
   publishYear     Int?
   publishingHouse String?
   publishingTown  String?
@@ -33,11 +45,9 @@ model Quote {
   reference  Book       @relation(fields: [bookId], references: [id], onDelete: Cascade) // One quote belongs to one book
   bookId     String
   categories Category[] @relation("QuotesCategories") // One quote may belong to many categories
-
-  /// author ->
-  /// No need to specifiy the author of the quote on this model
-  /// If we need the author, we'll be proceeding by joins to get
-  /// the authors of the book the quote belongs to.
+  uploader   User       @relation(fields: [uploaderId], references: [id]) // Many quotes can be uploaded by one user
+  uploaderId String
+  upvotes    User[]     @relation("UsersQuotes") // Many quotes are upvoted by many users
 }
 
 model Category {
