@@ -4,6 +4,7 @@ import { CreateBookDto } from "./lib/book.dto";
 import { UpdateBookDto } from './lib/book.dto';
 import { formatResponseData } from 'src/lib/formatters';
 import { FilterComparisonOptions } from './lib/@types';
+import { Public } from '../auth/auth.decorator';
 
 @Controller('api/book')
 export class BookController {
@@ -19,6 +20,7 @@ export class BookController {
   }
 
   // GET ALL
+  @Public()
   @Get()
   async findAll(
     @Query('pyc', new ParseEnumPipe(["gt", "lt", "eq"], { optional: true })) pyc?: FilterComparisonOptions,

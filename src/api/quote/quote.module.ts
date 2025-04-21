@@ -2,10 +2,12 @@ import { Module } from '@nestjs/common';
 import { QuoteService } from './quote.service';
 import { QuoteController } from './quote.controller';
 import { DatabaseModule } from 'src/database/database.module';
+import { AuthModule } from '../auth/auth.module';
+import { JwtModule } from '@nestjs/jwt';
 
 @Module({
   controllers: [QuoteController],
   providers: [QuoteService],
-  imports: [DatabaseModule]
+  imports: [DatabaseModule, AuthModule, JwtModule]
 })
 export class QuoteModule { }
