@@ -4,7 +4,7 @@ import { IsEmail, IsNotEmpty, IsOptional, IsString, IsStrongPassword, MaxLength 
 export class CreateUserDto {
     @IsString({ message: "Must provide a valid <name> : <type : string>" })
     @MaxLength(64, { message: "<name> must be 256 chars max length" })
-    @IsNotEmpty({ message: "<name> can't be empty or null" })
+    @IsOptional()
     name: string;
 
     @IsString({ message: "Must provide a valid <email> : <type : string>" })

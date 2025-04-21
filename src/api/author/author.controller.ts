@@ -3,6 +3,7 @@ import { AuthorService } from './author.service';
 import { CreateAuthorDto, UpdateAuthorDto } from "./author.dto";
 import { formatResponseData } from 'src/lib/formatters';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
+import { Public } from '../auth/auth.decorator';
 
 @Controller('api/author')
 export class AuthorController {
@@ -32,6 +33,7 @@ export class AuthorController {
   }
 
   // GET MANY
+  @Public()
   @Get()
   async findAll(
     @Query('name') name?: string,

@@ -3,6 +3,7 @@ import { CategoryService } from './category.service';
 import { CreateCategoryDto } from "./category.dto";
 import { UpdateCategoryDto } from './category.dto';
 import { formatResponseData } from 'src/lib/formatters';
+import { Public } from '../auth/auth.decorator';
 
 @Controller('api/category')
 export class CategoryController {
@@ -16,6 +17,7 @@ export class CategoryController {
   }
 
   // GET ALL
+  @Public()
   @Get()
   async findAll() {
     const categories = await this.categoryService.findAll();
