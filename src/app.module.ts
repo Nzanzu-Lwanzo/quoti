@@ -7,7 +7,7 @@ import { BookModule } from './api/book/book.module';
 import { CategoryModule } from './api/category/category.module';
 import { QuoteModule } from './api/quote/quote.module';
 import { UserModule } from './api/user/user.module';
-import { AuthModule } from './api/auth/auth.module';
+import { AuthenticationModule } from './authentication/authentication.module';
 
 @Module({
   imports: [
@@ -17,7 +17,7 @@ import { AuthModule } from './api/auth/auth.module';
     CategoryModule,
     QuoteModule,
     UserModule,
-    AuthModule
+    AuthenticationModule,
   ],
   controllers: [AppController],
   providers: [AppService],
