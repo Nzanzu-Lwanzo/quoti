@@ -64,9 +64,10 @@ export class QuoteService {
     return createdQuote
   }
 
-  async findAll() {
+  async findAll({ limit }: { limit: number | undefined }) {
     const quotes = await this.db.quote.findMany({
-      include: this.joinSchema
+      include: this.joinSchema,
+      take: limit
     })
     return quotes
   }

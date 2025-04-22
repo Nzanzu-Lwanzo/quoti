@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, ValidationPipe, NotFoundException, HttpCode, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, ValidationPipe, NotFoundException, HttpCode, UseGuards, Query } from '@nestjs/common';
 import { QuoteService } from './quote.service';
 import { CreateQuoteDto } from "./quote.dto";
 import { UpdateQuoteDto } from './quote.dto';
@@ -17,8 +17,10 @@ export class QuoteController {
 
   // GET ALL
   @Get()
-  async findAll() {
-    const quotes = await this.quoteService.findAll();
+  async findAll(
+    @Query('limit') limit?: number
+  ) {
+    const quotes = await this.quoteService.findAll({limit});
     return formatResponseData(quotes)
   }
 
