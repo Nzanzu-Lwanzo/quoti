@@ -3,7 +3,6 @@ import { QuoteService } from './quote.service';
 import { CreateQuoteDto } from "./quote.dto";
 import { UpdateQuoteDto } from './quote.dto';
 import { formatResponseData } from 'src/lib/formatters';
-import { Public } from '../auth/auth.decorator';
 
 @Controller('api/quote')
 export class QuoteController {
@@ -17,7 +16,6 @@ export class QuoteController {
   }
 
   // GET ALL
-  @Public()
   @Get()
   async findAll() {
     const quotes = await this.quoteService.findAll();

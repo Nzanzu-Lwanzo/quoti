@@ -3,14 +3,12 @@ import { UserService } from './user.service';
 import { CreateUserDto } from "./user.dto";
 import { UpdateUserDto } from './user.dto';
 import { formatResponseData } from 'src/lib/formatters';
-import { Public } from '../auth/auth.decorator';
 
 @Controller('api/user')
 export class UserController {
   constructor(private readonly userService: UserService) { }
 
   // CREATE
-  @Public()
   @Post()
   async create(
     @Body(ValidationPipe) createUserDto: CreateUserDto
