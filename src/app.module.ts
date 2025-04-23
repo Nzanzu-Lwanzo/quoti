@@ -8,9 +8,16 @@ import { CategoryModule } from './api/category/category.module';
 import { QuoteModule } from './api/quote/quote.module';
 import { UserModule } from './api/user/user.module';
 import { AuthenticationModule } from './authentication/authentication.module';
+import { ConfigModule } from '@nestjs/config';
+import configuration from './configuration';
 
 @Module({
   imports: [
+    ConfigModule.forRoot({
+      isGlobal: true,
+      cache: true,
+      load: [configuration]
+    }),
     DatabaseModule,
     AuthorModule,
     BookModule,
