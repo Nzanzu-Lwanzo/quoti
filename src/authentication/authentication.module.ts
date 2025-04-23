@@ -7,9 +7,19 @@ import { LocalAuthGuard } from './guards/local.guard';
 import { LocalStrategy } from './strategies/local.strategy';
 import { JwtStrategy } from './strategies/jwt.strategy';
 import { JwtAuthGuard } from './guards/jwt.guard';
+import { GoogleStrategy } from './strategies/google.strategy';
+import { GoogleAuthGuard } from './guards/google.guard';
 
 @Module({
-  providers: [AuthenticationService, LocalStrategy, JwtStrategy, LocalAuthGuard, JwtAuthGuard],
+  providers: [
+    AuthenticationService,
+    LocalStrategy,
+    JwtStrategy,
+    LocalAuthGuard,
+    JwtAuthGuard,
+    GoogleStrategy,
+    GoogleAuthGuard
+  ],
   controllers: [AuthenticationController],
   imports: [UserModule, JwtModule.register({
     secret: process.env.SECRET,

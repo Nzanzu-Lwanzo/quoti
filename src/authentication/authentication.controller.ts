@@ -6,6 +6,7 @@ import { formatResponseData } from 'src/lib/formatters';
 import { AuthenticationService } from './authentication.service';
 import { AuthUserType } from 'src/lib/@types';
 import { JwtAuthGuard } from './guards/jwt.guard';
+import { GoogleAuthGuard } from './guards/google.guard';
 
 @Controller('auth')
 export class AuthenticationController {
@@ -35,5 +36,17 @@ export class AuthenticationController {
     ) {
         response.removeHeader('authorization')
         return formatResponseData(null)
+    }
+
+    @Get('/google')
+    @UseGuards(GoogleAuthGuard)
+    async loginWithGoogle() { }
+
+    @Get('/callback/google')
+    @UseGuards(GoogleAuthGuard)
+    async googleAuthCallBack(
+        @Request() request: ExpressRequest
+    ) {
+        return formatResponseData(request.user)
     }
 }
