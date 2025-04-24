@@ -53,7 +53,7 @@ export class QuoteService {
           connect: { id: createQuoteDto.reference }
         },
         categories: {
-          connect: createQuoteDto.categories.map((id) => ({ id }))
+          connect: createQuoteDto.categories ? createQuoteDto.categories.map((id) => ({ id: Number(id) })) : undefined  
         },
         uploader: {
           connect: { id: createQuoteDto.uploader }
@@ -89,13 +89,11 @@ export class QuoteService {
         id
       },
       data: {
-        ...updateQuoteDto,
-        reference: {
-          connect: updateQuoteDto.reference ? { id: updateQuoteDto.reference } : undefined
-        },
-        uploader: {
-          connect: undefined // The uploader of a quote can't be changed
-        }
+        text: updateQuoteDto.text,
+        reference: updateQuoteDto.bookId ? { connect: { id: updateQuoteDto.bookId } } : undefined,
+        categories: updateQuoteDto.categoryIds ? { 
+          set: updateQuoteDto.categoryIds.map(id => ({ id: Number(id) }))
+        } : undefined
       },
       include: this.joinSchema
     })

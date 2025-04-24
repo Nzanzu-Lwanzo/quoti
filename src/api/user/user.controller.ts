@@ -3,19 +3,13 @@ import { UserService } from './user.service';
 import { CreateUserDto } from "./user.dto";
 import { UpdateUserDto } from './user.dto';
 import { formatResponseData } from 'src/lib/formatters';
+import { ApiExcludeController } from '@nestjs/swagger';
 
+@ApiExcludeController()
 @Controller('api/user')
 export class UserController {
   constructor(private readonly userService: UserService) { }
 
-  // CREATE
-  @Post()
-  async create(
-    @Body(ValidationPipe) createUserDto: CreateUserDto
-  ) {
-    const createdUser = await this.userService.create(createUserDto);
-    return formatResponseData(createdUser)
-  }
 
   // GET ALL
   @Get()
