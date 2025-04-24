@@ -18,9 +18,10 @@ export class QuoteController {
   // GET ALL
   @Get()
   async findAll(
-    @Query('limit') limit?: number
+    @Query('limit') limit?: number,
+    @Query('search') search?: string
   ) {
-    const quotes = await this.quoteService.findAll({limit});
+    const quotes = await this.quoteService.findAll({ limit, search });
     return formatResponseData(quotes)
   }
 
