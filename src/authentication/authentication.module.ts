@@ -1,32 +1,34 @@
 import { Module } from '@nestjs/common';
+import { JwtModule } from '@nestjs/jwt';
+import { PassportModule } from '@nestjs/passport';
+import { ApiTags } from '@nestjs/swagger';
 import { AuthenticationService } from './authentication.service';
 import { AuthenticationController } from './authentication.controller';
-import { UserModule } from 'src/api/user/user.module';
-import { JwtModule } from '@nestjs/jwt';
-import { LocalAuthGuard } from './guards/local.guard';
 import { LocalStrategy } from './strategies/local.strategy';
 import { JwtStrategy } from './strategies/jwt.strategy';
-import { JwtAuthGuard } from './guards/jwt.guard';
 import { GoogleStrategy } from './strategies/google.strategy';
-import { GoogleAuthGuard } from './guards/google.guard';
+import { UserModule } from '../api/user/user.module';
+import configuration from '../configuration';
+import { DatabaseModule } from 'src/database/database.module';
 
+@ApiTags('Authentication')
 @Module({
+  imports: [
+    UserModule,
+    PassportModule,
+    DatabaseModule,
+    JwtModule.register({
+      secret: configuration().jwt.secret,
+      signOptions: { expiresIn: configuration().jwt.expiresIn },
+    }),
+  ],
+  controllers: [AuthenticationController],
   providers: [
     AuthenticationService,
     LocalStrategy,
     JwtStrategy,
-    LocalAuthGuard,
-    JwtAuthGuard,
-    GoogleStrategy,
-    GoogleAuthGuard
+    GoogleStrategy
   ],
-  controllers: [AuthenticationController],
-  imports: [UserModule, JwtModule.register({
-    secret: process.env.SECRET,
-    global: true,
-    signOptions: {
-      expiresIn: '1h' // Expires in 1 (one) hour ->  Not working
-    }
-  })]
+  exports: [AuthenticationService]
 })
 export class AuthenticationModule { }

@@ -21,20 +21,6 @@ export class UserService {
     }
   }
 
-  async create(createUserDto: CreateUserDto) {
-
-    const securePassword = await generateSecurePassword(createUserDto.password)
-    const createdUser = await this.db.user.create({
-      data: {
-        ...createUserDto,
-        password: securePassword
-      }
-    })
-
-    return createdUser
-
-  }
-
   async findAll() {
     const users = await this.db.user.findMany({
       orderBy: {
