@@ -6,7 +6,7 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
     cors: {
       methods: ['GET', 'POST', 'PATCH', 'DELETE'],
-      origin: ['http://localhost:3000', 'http://localhost:5000']
+      origin: ['http://localhost:3000', 'http://localhost:5000', 'http://localhost:5173']
     }
   });
 
@@ -23,7 +23,7 @@ async function bootstrap() {
     .build()
 
   const document = SwaggerModule.createDocument(app, config, {
-    
+
   })
 
   SwaggerModule.setup('/api/docs', app, document)
