@@ -9,7 +9,7 @@
     "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
   },
   "scripts": {
-    "build": "npx prisma migrate dev --name deployment_1 && npx prisma generate && nest build",
+    "build": "npx prisma migrate reset && npx prisma migrate dev --name deployment_1 && npx prisma generate && nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
     "start:dev": "nest start --watch",
